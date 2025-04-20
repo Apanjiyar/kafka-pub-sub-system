@@ -1,5 +1,6 @@
 package com.example.event.consumer;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,11 @@ import com.example.event.PaymentEvent;
 public class PaymentEventConsumer {
 
     @KafkaListener(topics = KafkaTopicsAndConsumerGroups.PAYMENT_EVENTS_TOPIC, groupId = KafkaTopicsAndConsumerGroups.PAYMENT_EVENTS_GROUP_ID, containerFactory = "paymentKafkaListenerContainerFactory")
-    public void listen(BaseEvent<PaymentEvent> event) {
-        System.out.println("Received Payment Event: " + event.getData().getPaymentId());
+    public void listen(ConsumerRecord<String, BaseEvent<PaymentEvent>> kafkaRecord) {
+        BaseEvent<PaymentEvent> event = kafkaRecord.value();
+        System.out.println("Received Order Event: " + event.getData().getPaymentId());
+        System.out.println("Partition: " + kafkaRecord.partition());
+        System.out.println("Offset: " + kafkaRecord.offset());
     }
 }
 
