@@ -1,5 +1,7 @@
 package com.example.event;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +15,9 @@ public class BaseEvent<T> {
 	private String timestamp;
     private String eventType;
     private String source;
-    private T data;
+    private List<T> data;
     
-    public static <T> BaseEvent<T> of(T data, String eventType, String source) {
+    public static <T> BaseEvent<T> of(List<T> data, String eventType, String source) {
     	return BaseEvent.<T>builder()
 				.timestamp(String.valueOf(System.currentTimeMillis()))
 				.eventType(eventType)

@@ -14,7 +14,7 @@ public class PaymentEventConsumer {
     @KafkaListener(topics = KafkaTopicsAndConsumerGroups.PAYMENT_EVENTS_TOPIC, groupId = KafkaTopicsAndConsumerGroups.PAYMENT_EVENTS_GROUP_ID, containerFactory = "paymentKafkaListenerContainerFactory")
     public void listen(ConsumerRecord<String, BaseEvent<PaymentEvent>> kafkaRecord) {
         BaseEvent<PaymentEvent> event = kafkaRecord.value();
-        System.out.println("Received Order Event: " + event.getData().getPaymentId());
+        System.out.println("Received Order Event: " + event.getData());
         System.out.println("Partition: " + kafkaRecord.partition());
         System.out.println("Offset: " + kafkaRecord.offset());
     }

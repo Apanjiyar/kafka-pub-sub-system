@@ -26,7 +26,7 @@ public class KafkaTestController {
     @PostMapping("/order")
     public ResponseEntity<String> sendOrderEvent(@RequestBody OrderEvent orderEvent) {
         KafkaProducer<OrderEvent> producer = registry.getProducer(OrderEvent.class);
-        BaseEvent<OrderEvent> baseEvent = BaseEvent.of(orderEvent, "order-events", "order-events");
+        BaseEvent<OrderEvent> baseEvent = BaseEvent.of(List.of(orderEvent), "order-events", "order-events");
         producer.send(baseEvent, "ABCD1234");
         return ResponseEntity.ok("Order event sent");
     }
@@ -34,7 +34,7 @@ public class KafkaTestController {
     @PostMapping("/orders")
     public ResponseEntity<String> sendOrderEvent(@RequestBody List<OrderEvent> orderEvents) {
         KafkaProducer<OrderEvent> producer = registry.getProducer(OrderEvent.class);
-        BaseEvent<List<OrderEvent>> baseEvent = BaseEvent.of(orderEvents, "order-events", "order-events");
+        BaseEvent<OrderEvent> baseEvent = BaseEvent.of(orderEvents, "order-events", "order-events");
         producer.sendInBatch(baseEvent, 2,  "ABCD1234");
         return ResponseEntity.ok("Order event sent");
     }
@@ -42,7 +42,7 @@ public class KafkaTestController {
     @PostMapping("/payment")
     public ResponseEntity<String> sendOPaymentEvent(@RequestBody PaymentEvent paymentEvent) {
         KafkaProducer<PaymentEvent> producer = registry.getProducer(PaymentEvent.class);
-        BaseEvent<PaymentEvent> baseEvent = BaseEvent.of(paymentEvent, "order-events", "order-events");
+        BaseEvent<PaymentEvent> baseEvent = BaseEvent.of(List.of(paymentEvent), "order-events", "order-events");
         producer.send(baseEvent, "ABCD1234");
         return ResponseEntity.ok("Order event sent");
     }
@@ -50,7 +50,7 @@ public class KafkaTestController {
     @PostMapping("/payments")
     public ResponseEntity<String> sendPaymentEvent(@RequestBody List<PaymentEvent> paymentEvents) {
         KafkaProducer<PaymentEvent> producer = registry.getProducer(PaymentEvent.class);
-        BaseEvent<List<PaymentEvent>> baseEvent = BaseEvent.of(paymentEvents, "order-events", "order-events");
+        BaseEvent<PaymentEvent> baseEvent = BaseEvent.of(paymentEvents, "order-events", "order-events");
         producer.sendInBatch(baseEvent, 2,  "ABCD1234");
         return ResponseEntity.ok("Order event sent");
     }

@@ -14,7 +14,7 @@ public class OrderEventConsumer {
     @KafkaListener(topics = KafkaTopicsAndConsumerGroups.ORDER_EVENTS_TOPIC, groupId = KafkaTopicsAndConsumerGroups.ORDER_EVENTS_GROUP_ID, containerFactory = "orderKafkaListenerContainerFactory")
     public void listen(ConsumerRecord<String, BaseEvent<OrderEvent>> kafkaRecord) {
         BaseEvent<OrderEvent> event = kafkaRecord.value();
-        System.out.println("Received Order Event: " + event.getData().getOrderId());
+        System.out.println("Received Order Event: " + event.getData());
         System.out.println("Partition: " + kafkaRecord.partition());
         System.out.println("Offset: " + kafkaRecord.offset());
     }
